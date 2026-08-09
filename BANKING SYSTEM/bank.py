@@ -4,7 +4,10 @@ class Bank:
         self.accounts = []
 
     def add_account(self, account):
-        self.accounts.append(account)
+        if self.find_account(account.get_account_no()) is None:
+            self.accounts.append(account)
+            return True
+        return False
 
     def find_account(self, account_no):
         for account in self.accounts:
@@ -12,13 +15,25 @@ class Bank:
                 return account
         return None
 
+    def delete_account(self, account_no):
+        account = self.find_account(account_no)
+
+        if account:
+            self.accounts.remove(account)
+            return True
+
+        return False
+
     def show_accounts(self):
         if len(self.accounts) == 0:
-            print("No Accounts Available")
+            print("\nNo Accounts Available")
             return
 
+        print("\n========== ALL ACCOUNTS ==========")
+
         for account in self.accounts:
-            print("\nAccount Number:", account.get_account_no())
+            print("Account Number:", account.get_account_no())
             print("Name:", account.get_name())
-            print("Account Type:", account.account_type())
+            print("Type:", account.account_type())
             print("Balance:", account.get_balance())
+            print("----------------------------------")
